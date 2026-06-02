@@ -47,7 +47,7 @@ EXTENDED_DICT = """---
 name: luna_pinyin.extended
 version: "2026.06"
 sort: by_weight
-use_preset_vocabulary: true
+use_preset_vocabulary: false
 import_tables:
   - luna_pinyin
   - academic_ime

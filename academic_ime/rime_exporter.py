@@ -11,7 +11,7 @@ RIME_HEADER = """# Rime dictionary
 name: academic_ime
 version: "0.1"
 sort: by_weight
-use_preset_vocabulary: true
+use_preset_vocabulary: false
 ...
 
 """
