@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Test](https://github.com/你的用户名/academic-ime/actions/workflows/test.yml/badge.svg)](https://github.com/你的用户名/academic-ime/actions/workflows/test.yml)
+[![Test](https://github.com/A2A-D2D/academic-ime/actions/workflows/test.yml/badge.svg)](https://github.com/A2A-D2D/academic-ime/actions/workflows/test.yml)
 
 面向科研写作的中文输入法增强工具。分析论文、周报、笔记、代码注释等个人语料，自动提取学术高频词、专业短语、中英混合术语，**一键生成 Rime 输入法词库**。
 
@@ -12,7 +12,7 @@
 
 ### 从 GitHub Releases 安装（推荐）
 
-去 [Releases](https://github.com/你的用户名/academic-ime/releases) 下载最新的 `.whl` 文件，然后：
+去 [Releases](https://github.com/A2A-D2D/academic-ime/releases) 下载最新的 `.whl` 文件，然后：
 
 ```bash
 pip install academic_ime-0.1.0-py3-none-any.whl
@@ -21,7 +21,7 @@ pip install academic_ime-0.1.0-py3-none-any.whl
 ### 从源码安装
 
 ```bash
-git clone https://github.com/你的用户名/academic-ime.git
+git clone https://github.com/A2A-D2D/academic-ime.git
 cd academic-ime
 pip install -e .
 ```
