@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual env
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project output (keep dirs, ignore contents)
+output/*
+!output/.gitkeep
+data/*
+!data/.gitkeep
+
+# User config
+user_terms.csv
+academic_ime_config.toml
+
+# pytest
+.pytest_cache/

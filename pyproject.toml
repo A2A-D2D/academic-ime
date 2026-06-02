@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "academic-ime"
+version = "0.1.0"
+description = "学术联想输入法 - 面向科研写作的中文输入法增强工具"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+dependencies = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "jieba>=0.42.1",
+    "pypinyin>=0.49.0",
+    "python-docx>=1.0.0",
+    "pypdf>=4.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+]
+
+[project.scripts]
+academic-ime = "academic_ime.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["academic_ime*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,115 @@
+"""Weight calculation and CSV I/O for candidate terms."""
+
+from __future__ import annotations
+
+import csv
+import re
+from collections import Counter
+from pathlib import Path
+
+from academic_ime.config import (
+    BASE_WEIGHT,
+    FREQ_MULTIPLIER,
+    BONUS_MIXED,
+    BONUS_PHRASE,
+    BONUS_UPPER_ABBR,
+    BONUS_LENGTH_OPTIMAL,
+    BONUS_MULTI_SOURCE,
+    MIN_WEIGHT,
+    MAX_WEIGHT,
+)
+from academic_ime.pinyin_utils import term_to_pinyin
+from academic_ime.term_extractor import classify_term
+
+
+def calculate_weight(
+    term: str,
+    freq: int,
+    source_count: int,
+    term_type: str | None = None,
+) -> int:
+    """Calculate the weight for a candidate term.
+
+    Formula:
+        weight = BASE + freq * FREQ_MULTIPLIER + bonuses
+
+    Bonuses:
+        - mixed term: +20000
+        - phrase term: +10000
+        - contains uppercase acronym: +8000
+        - length 4-12: +5000
+        - multi-source: +source_count * 2000
+    """
+    if term_type is None:
+        term_type = classify_term(term)
+
+    weight = BASE_WEIGHT + freq * FREQ_MULTIPLIER
+
+    if term_type == "mixed":
+        weight += BONUS_MIXED
+    elif term_type == "phrase":
+        weight += BONUS_PHRASE
+
+    if re.search(r"[A-Z]{2,}", term):
+        weight += BONUS_UPPER_ABBR
+
+    if 4 <= len(term) <= 12:
+        weight += BONUS_LENGTH_OPTIMAL
+
+    weight += source_count * BONUS_MULTI_SOURCE
+
+    return max(MIN_WEIGHT, min(MAX_WEIGHT, weight))
+
+
+def build_lexicon(
+    term_freq: Counter,
+    term_sources: Counter,
+) -> list[dict[str, str | int]]:
+    """Build the candidate lexicon from frequency and source counters.
+
+    Returns a list of dicts with keys: term, pinyin, weight, source_count, term_type, enabled.
+    """
+    entries: list[dict[str, str | int]] = []
+
+    for term, freq in term_freq.items():
+        source_count = term_sources.get(term, 1)
+        term_type = classify_term(term)
+        pinyin = term_to_pinyin(term)
+        weight = calculate_weight(term, freq, source_count, term_type)
+
+        entries.append({
+            "term": term,
+            "pinyin": pinyin,
+            "weight": weight,
+            "source_count": source_count,
+            "term_type": term_type,
+            "enabled": 1,
+        })
+
+    entries.sort(key=lambda e: e["weight"], reverse=True)
+    return entries
+
+
+CSV_FIELDS = ["term", "pinyin", "weight", "source_count", "term_type", "enabled"]
+
+
+def write_csv(entries: list[dict[str, str | int]], path: Path) -> None:
+    """Write lexicon entries to a CSV file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_FIELDS)
+        writer.writeheader()
+        writer.writerows(entries)
+
+
+def read_csv(path: Path) -> list[dict[str, str | int]]:
+    """Read lexicon entries from a CSV file."""
+    entries: list[dict[str, str | int]] = []
+    with open(path, "r", newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            row["weight"] = int(row["weight"])
+            row["source_count"] = int(row["source_count"])
+            row["enabled"] = int(row["enabled"])
+            entries.append(row)
+    return entries

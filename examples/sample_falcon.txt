@@ -1,0 +1,6 @@
+本周完成 Falcon 签名流程联调，重点针对当前范数溢出问题进行定位分析，
+排查采样参数读取、SamplerZ 输出、FPU/FFT 精度以及范数计算逻辑等环节。
+同时完善 Falcon Tree 与 ffSampling 之间的参数读取、缓存管理和数据调度接口，
+继续开展 ffSampling、SamplerZ、FPU/FFT 的联合仿真，并整理阶段性调试结果和性能情况。
+单 FPU 方案约需要 51w cycles，双 FPU 方案约需要 45w cycles。
+后续计划进行综合，分析资源占用、综合数据以及性能面积 trade-off。
