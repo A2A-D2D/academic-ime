@@ -64,12 +64,19 @@ def calculate_weight(
 def build_lexicon(
     term_freq: Counter,
     term_sources: Counter,
+    include_common_en: bool = True,
 ) -> list[dict[str, str | int]]:
     """Build the candidate lexicon from frequency and source counters.
+
+    Args:
+        term_freq: term → frequency counter from corpus extraction.
+        term_sources: term → number of source files.
+        include_common_en: if True, merge built-in common English word list.
 
     Returns a list of dicts with keys: term, pinyin, weight, source_count, term_type, enabled.
     """
     entries: list[dict[str, str | int]] = []
+    seen: set[str] = set()
 
     for term, freq in term_freq.items():
         source_count = term_sources.get(term, 1)
@@ -85,6 +92,25 @@ def build_lexicon(
             "term_type": term_type,
             "enabled": 1,
         })
+        seen.add(term.lower())
+
+    # Merge common English words (lower weight, as baseline vocabulary)
+    if include_common_en:
+        from academic_ime.wordlist import COMMON_ENGLISH
+
+        for word, rank in COMMON_ENGLISH:
+            if word.lower() in seen:
+                continue
+            weight = max(1000, 5000 - rank * 4)
+            entries.append({
+                "term": word,
+                "pinyin": word.lower(),
+                "weight": weight,
+                "source_count": 0,
+                "term_type": "en",
+                "enabled": 1,
+            })
+            seen.add(word.lower())
 
     entries.sort(key=lambda e: e["weight"], reverse=True)
     return entries
