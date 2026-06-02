@@ -1,0 +1,38 @@
+patch:
+  "style/color_scheme": academic_blue
+  "style/horizontal": true
+  "style/inline_preedit": true
+  "style/font_face": "Microsoft YaHei, Consolas"
+  "style/font_point": 14
+  "style/label_font_point": 12
+  "style/comment_font_point": 12
+  "style/layout/+":
+    min_width: 180
+    margin_x: 12
+    margin_y: 8
+    spacing: 6
+    candidate_spacing: 8
+    hilite_spacing: 4
+    hilite_padding: 4
+    corner_radius: 8
+    round_corner: 6
+    border_width: 1
+
+  "preset_color_schemes/academic_blue":
+    name: 学术蓝／Academic Blue
+    author: AcademicIME
+    color_format: rgba
+    text_color: 0x1a2332ff
+    back_color: 0xf5f8fcff
+    border_color: 0xc8d6e5ff
+    shadow_color: 0x00000018
+    candidate_text_color: 0x2c3e50ff
+    candidate_back_color: 0xf5f8fc00
+    comment_text_color: 0x7f8c8dff
+    label_color: 0x5d9cecff
+    hilited_text_color: 0x1a2332ff
+    hilited_back_color: 0xe8f0feff
+    hilited_candidate_text_color: 0xffffff
+    hilited_candidate_back_color: 0x4a90d9ff
+    hilited_label_color: 0xffffffff
+    hilited_comment_text_color: 0xa0b4c8ff

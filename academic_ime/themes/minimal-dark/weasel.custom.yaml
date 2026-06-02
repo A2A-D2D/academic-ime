@@ -1,0 +1,38 @@
+patch:
+  "style/color_scheme": minimal_dark
+  "style/horizontal": true
+  "style/inline_preedit": true
+  "style/font_face": "Microsoft YaHei, Consolas"
+  "style/font_point": 14
+  "style/label_font_point": 12
+  "style/comment_font_point": 12
+  "style/layout/+":
+    min_width: 180
+    margin_x: 12
+    margin_y: 8
+    spacing: 6
+    candidate_spacing: 8
+    hilite_spacing: 4
+    hilite_padding: 4
+    corner_radius: 6
+    round_corner: 4
+    border_width: 1
+
+  "preset_color_schemes/minimal_dark":
+    name: 极简暗色／Minimal Dark
+    author: AcademicIME
+    color_format: rgba
+    text_color: 0xe0e0e0ff
+    back_color: 0x1e1e1eff
+    border_color: 0x3a3a3aff
+    shadow_color: 0x00000044
+    candidate_text_color: 0xccccccff
+    candidate_back_color: 0x1e1e1e00
+    comment_text_color: 0x888888ff
+    label_color: 0x6a8cbeff
+    hilited_text_color: 0xffffffff
+    hilited_back_color: 0x2a2a2aff
+    hilited_candidate_text_color: 0xffffffff
+    hilited_candidate_back_color: 0x3a6da5ff
+    hilited_label_color: 0xffffffff
+    hilited_comment_text_color: 0xaaaaaaff

@@ -1,0 +1,71 @@
+patch:
+  "style/color_scheme": cute_dog
+  "style/color_scheme_dark": cute_dog_dark
+  "style/horizontal": true
+  "style/inline_preedit": true
+  "style/label_format": "🐾%s"
+  "style/mark_text": "🐶"
+  "style/font_face": "Microsoft YaHei, Segoe UI Emoji"
+  "style/label_font_face": "Segoe UI Emoji, Microsoft YaHei"
+  "style/comment_font_face": "Microsoft YaHei"
+  "style/font_point": 14
+  "style/label_font_point": 12
+  "style/comment_font_point": 12
+  "style/layout/+":
+    min_width: 180
+    margin_x: 14
+    margin_y: 10
+    spacing: 8
+    candidate_spacing: 10
+    hilite_spacing: 4
+    hilite_padding: 6
+    hilite_padding_x: 8
+    hilite_padding_y: 6
+    corner_radius: 14
+    round_corner: 10
+    border_width: 2
+    shadow_radius: 8
+    shadow_offset_x: 2
+    shadow_offset_y: 2
+
+  "preset_color_schemes/cute_dog":
+    name: 线条小狗／Cute Dog
+    author: AcademicIME
+    color_format: rgba
+    text_color: 0x5a4636ff
+    back_color: 0xfffbf1ff
+    border_color: 0xe9cfaeff
+    shadow_color: 0x00000022
+    candidate_text_color: 0x5a4636ff
+    candidate_back_color: 0xfffbf100
+    comment_text_color: 0x9a7b62ff
+    label_color: 0xb48a6aff
+    hilited_text_color: 0x5a4636ff
+    hilited_back_color: 0xffeedcff
+    hilited_candidate_text_color: 0x4a3328ff
+    hilited_candidate_back_color: 0xffd6e7ff
+    hilited_candidate_border_color: 0xf3a8c8ff
+    hilited_label_color: 0x4a3328ff
+    hilited_comment_text_color: 0x7d5f4cff
+    hilited_mark_color: 0xd1849bff
+
+  "preset_color_schemes/cute_dog_dark":
+    name: 线条小狗·夜间／Cute Dog Dark
+    author: AcademicIME
+    color_format: rgba
+    text_color: 0xffeadcff
+    back_color: 0x2a211cff
+    border_color: 0x6b5344ff
+    shadow_color: 0x00000055
+    candidate_text_color: 0xffeadcff
+    candidate_back_color: 0x2a211c00
+    comment_text_color: 0xc8a98dff
+    label_color: 0xd3a781ff
+    hilited_text_color: 0xffeadcff
+    hilited_back_color: 0x3c3028ff
+    hilited_candidate_text_color: 0x2a211cff
+    hilited_candidate_back_color: 0xffc7ddff
+    hilited_candidate_border_color: 0xff9cc2ff
+    hilited_label_color: 0x2a211cff
+    hilited_comment_text_color: 0x5a4636ff
+    hilited_mark_color: 0xffb6d0ff

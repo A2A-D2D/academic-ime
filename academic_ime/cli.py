@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 
 import typer
 from rich.console import Console
@@ -13,6 +14,12 @@ from academic_ime.term_extractor import extract_from_corpus
 from academic_ime.lexicon import build_lexicon, write_csv, read_csv
 from academic_ime.rime_exporter import export_rime
 from academic_ime.rime_setup import setup_rime
+from academic_ime.theme_manager import (
+    list_themes,
+    print_theme_list,
+    install_theme,
+    preview_theme,
+)
 from academic_ime.pinyin_utils import term_to_pinyin
 
 app = typer.Typer(
@@ -220,6 +227,39 @@ def setup_rime_cmd(
         console.print(action)
     if any("red" in a for a in actions):
         raise typer.Exit(code=1)
+
+
+theme_app = typer.Typer(help="主题/皮肤管理")
+app.add_typer(theme_app, name="theme")
+
+
+@theme_app.command(name="list")
+def theme_list() -> None:
+    """列出所有内置主题。"""
+    print_theme_list()
+
+
+@theme_app.command(name="install")
+def theme_install(
+    theme_name: str = typer.Argument(..., help="主题名称，如 cute-dog"),
+    rime_dir: Optional[str] = typer.Option(
+        None, "--rime-dir", help="Rime 用户目录路径，默认自动检测"
+    ),
+) -> None:
+    """安装主题到小狼毫：备份原配置 → 写入新皮肤 → 提示部署。"""
+    code = install_theme(theme_name, rime_dir=rime_dir)
+    if code != 0:
+        raise typer.Exit(code=code)
+
+
+@theme_app.command(name="preview")
+def theme_preview(
+    theme_name: str = typer.Argument(..., help="主题名称，如 cute-dog"),
+) -> None:
+    """预览主题的 weasel.custom.yaml 内容。"""
+    code = preview_theme(theme_name)
+    if code != 0:
+        raise typer.Exit(code=code)
 
 
 def main() -> None:

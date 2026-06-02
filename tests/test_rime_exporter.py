@@ -24,7 +24,7 @@ def test_export_rime_yaml() -> None:
         assert "name: academic_ime" in content
         assert 'version: "0.1"' in content
         assert "sort: by_weight" in content
-        assert "use_preset_vocabulary: true" in content
+        assert "use_preset_vocabulary: false" in content
         assert "..." in content
 
         # Check entries (tab-separated)
