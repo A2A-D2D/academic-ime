@@ -2,18 +2,23 @@
 
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Test](https://github.com/你的用户名/academic-ime/actions/workflows/test.yml/badge.svg)](https://github.com/你的用户名/academic-ime/actions/workflows/test.yml)
 
 面向科研写作的中文输入法增强工具。分析论文、周报、笔记、代码注释等个人语料，自动提取学术高频词、专业短语、中英混合术语，**一键生成 Rime 输入法词库**。
 
 > 纯本地运行 · 无需联网 · 不依赖大模型
 
-## 一行安装
+## 安装
+
+### 从 GitHub Releases 安装（推荐）
+
+去 [Releases](https://github.com/你的用户名/academic-ime/releases) 下载最新的 `.whl` 文件，然后：
 
 ```bash
-pip install git+https://github.com/你的用户名/academic-ime.git
+pip install academic_ime-0.1.0-py3-none-any.whl
 ```
 
-或者本地开发：
+### 从源码安装
 
 ```bash
 git clone https://github.com/你的用户名/academic-ime.git
