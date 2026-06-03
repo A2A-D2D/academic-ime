@@ -19,8 +19,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+gui = [
+    "flask>=2.0.0",
+]
 dev = [
     "pytest>=7.0.0",
+    "flask>=2.0.0",
 ]
 
 [project.scripts]

@@ -287,6 +287,22 @@ def theme_uninstall(
         raise typer.Exit(code=code)
 
 
+@app.command(name="gui")
+def gui_start(
+    port: int = typer.Option(5278, help="Web GUI 端口号"),
+    no_browser: bool = typer.Option(False, "--no-browser", help="不自动打开浏览器"),
+) -> None:
+    """启动 Web 图形界面：选择领域优先级，一键构建部署。"""
+    try:
+        from academic_ime.gui import start_gui
+    except ImportError:
+        console.print("[red]需要安装 flask: pip install flask[/red]")
+        raise typer.Exit(code=1)
+
+    console.print("[bold blue]启动 AcademicIME Web 界面...[/bold blue]")
+    start_gui(port=port, open_browser=not no_browser)
+
+
 def main() -> None:
     """Entry point for CLI."""
     app()

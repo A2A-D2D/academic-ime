@@ -8,6 +8,25 @@
 
 > 纯本地运行 · 无需联网 · 不依赖大模型
 
+## 🖥️ Web 图形界面（推荐）
+
+如果你不想记命令行，可以一键启动 Web 界面，在浏览器里操作：
+
+```bash
+# 安装 GUI 扩展
+pip install academic_ime-0.1.0-py3-none-any.whl[gui]
+
+# 启动 Web 界面（自动打开浏览器）
+academic-ime gui
+```
+
+界面功能：
+- **点选领域**并拖拽排序优先级 → 系统自动匹配专业词汇
+- **选择语料目录** → 从论文/周报/笔记中提取术语
+- **一键构建 & 部署** → 自动合并领域词库 + 个人语料，部署到 Rime
+
+> 也可以用命令行模式：[场景一](#场景一刚安装上传最近的文档建词库) / [场景二](#场景二已有词库提高某些词的优先级)
+
 ## 安装
 
 ### 从 GitHub Releases 安装（推荐）
@@ -89,6 +108,7 @@ academic-ime setup-rime output/academic_ime.dict.yaml
 | `academic-ime export-rime <csv>` | 导出 Rime dict.yaml 词库 |
 | `academic-ime stats <csv>` | 显示词库统计和 Top 20 |
 | `academic-ime setup-rime <dict>` | **一键部署到 Rime**（复制+配置+皮肤+部署） |
+| `academic-ime gui` | **启动 Web 图形界面**（领域选择 + 一键部署） |
 | `academic-ime theme list` | 列出内置主题 |
 | `academic-ime theme show <name>` | 展示主题详情（含颜色预览色块） |
 | `academic-ime theme preview <name>` | 预览皮肤 YAML 内容 |
