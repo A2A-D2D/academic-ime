@@ -14,7 +14,7 @@ class TestDomainProfiles:
 
     def test_all_domains_have_words(self):
         from academic_ime.domain_profiles import DOMAINS
-        assert len(DOMAINS) == 8
+        assert len(DOMAINS) == 14
         for did, domain in DOMAINS.items():
             assert len(domain["words"]) > 0, f"Domain {did} has no words"
             assert domain["name"], f"Domain {did} has no name"
@@ -23,7 +23,7 @@ class TestDomainProfiles:
     def test_get_domain_list(self):
         from academic_ime.domain_profiles import get_domain_list
         domains = get_domain_list()
-        assert len(domains) == 8
+        assert len(domains) == 14
         for d in domains:
             assert "id" in d
             assert "name" in d
@@ -80,7 +80,7 @@ class TestGUIApp:
         resp = client.get("/api/domains")
         assert resp.status_code == 200
         data = json.loads(resp.data)
-        assert len(data) == 8
+        assert len(data) == 14
         assert "word_count" in data[0]
         assert data[0]["word_count"] > 0
 
