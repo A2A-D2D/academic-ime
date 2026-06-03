@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "academic-ime"
-version = "0.1.0"
+version = "0.2.0"
 description = "学术联想输入法 - 面向科研写作的中文输入法增强工具"
 readme = "README.md"
 license = {text = "MIT"}
