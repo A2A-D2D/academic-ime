@@ -15,7 +15,7 @@
 去 [Releases](https://github.com/A2A-D2D/academic-ime/releases) 下载最新的 `.whl` 文件，然后：
 
 ```bash
-pip install academic_ime-0.1.0-py3-none-any.whl
+pip install academic_ime-0.2.0-py3-none-any.whl
 ```
 
 ### 从源码安装
