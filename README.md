@@ -26,43 +26,57 @@ cd academic-ime
 pip install -e .
 ```
 
-## 三步上手
+## 使用指南
+
+### 场景一：刚安装，上传最近的文档建词库
+
+把最近写的论文、周报、笔记放到一个文件夹里，一行命令搞定：
 
 ```bash
-# 1. 分析你的语料，提取候选词
-academic-ime extract ~/我的论文 --out output/candidates.csv
+# 把文档放到 data/ 目录
+# 支持格式：.txt .md .docx .pdf
+cp ~/Documents/本周周报.md data/
+cp ~/Documents/芯片验证笔记.txt data/
 
-# 2. 预览 & 导出 Rime 词库
-academic-ime review output/candidates.csv
+# 提取术语 → 导出词库 → 一键部署
+academic-ime extract data/ --out output/candidates.csv
 academic-ime export-rime output/candidates.csv
-
-# 3. 一键部署到 Rime（自动复制 + 配置 + 部署）
 academic-ime setup-rime output/academic_ime.dict.yaml
 ```
 
-> 第 3 步会自动完成：复制词库、创建扩展词典、配置简繁体方案、应用皮肤、重新部署。无需手动操作 Rime 配置。
+之后写新文档时把新文件丢进 `data/`，重新跑一次即可增量更新词库。
 
-完成！切换到小狼毫/鼠须管，正常打字，学术词汇自动出现在候选词前列。
+> 文档越多，覆盖越全。建议至少放 3-5 篇代表性的论文或周报。
 
-## 试用内置示例
+### 场景二：已有词库，提高某些词的优先级
+
+如果已经生成过 `output/candidates.csv`，想手动调整某些词的权重：
+
+```bash
+# 1. 查看当前词库
+academic-ime review output/candidates.csv
+
+# 2. 用 Excel / VS Code 打开 candidates.csv
+#    - 把想优先出现的词 weight 调高（最大值 100000）
+#    - 不想出现的词 enabled 改为 0
+#    - 词条类型：zh=中文 en=英文 mixed=中英混合 phrase=短语
+
+# 3. 重新导出 & 部署
+academic-ime export-rime output/candidates.csv
+academic-ime setup-rime output/academic_ime.dict.yaml
+```
+
+> 每次修改 CSV 后重新 export + setup-rime 即可生效，Rime 会自动重建索引。
+
+### 快速试用
+
+项目自带一篇示例语料，可以立即体验效果：
 
 ```bash
 academic-ime init
 academic-ime extract examples --out output/candidates.csv
 academic-ime stats output/candidates.csv
 academic-ime setup-rime output/academic_ime.dict.yaml
-```
-
-示例输出（`academic_ime.dict.yaml`）：
-
-```
-Falcon签名流程    falcon qian ming liu cheng    38000
-FPU/FFT精度       fpu/fft jing du              46000
-SamplerZ输出      samplerz shu chu             38000
-ffSampling之间    ffsampling zhi jian          38000
-范数溢出          fan shu yi chu               18000
-综合数据          zong he shu ju               18000
-性能面积trade-off  xing neng mian ji trade-off  33000
 ```
 
 ## CLI 命令
