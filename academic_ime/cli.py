@@ -19,6 +19,8 @@ from academic_ime.theme_manager import (
     print_theme_list,
     install_theme,
     preview_theme,
+    show_theme,
+    uninstall_theme,
 )
 from academic_ime.pinyin_utils import term_to_pinyin
 
@@ -258,6 +260,29 @@ def theme_preview(
 ) -> None:
     """预览主题的 weasel.custom.yaml 内容。"""
     code = preview_theme(theme_name)
+    if code != 0:
+        raise typer.Exit(code=code)
+
+
+@theme_app.command(name="show")
+def theme_show(
+    theme_name: str = typer.Argument(..., help="主题名称，如 line-puppy"),
+) -> None:
+    """展示主题详情：名称、说明、推荐字体、颜色色块、YAML 配置。"""
+    code = show_theme(theme_name)
+    if code != 0:
+        raise typer.Exit(code=code)
+
+
+@theme_app.command(name="uninstall")
+def theme_uninstall(
+    theme_name: str = typer.Argument(..., help="主题名称，如 line-puppy"),
+    rime_dir: Optional[str] = typer.Option(
+        None, "--rime-dir", help="Rime 用户目录路径，默认自动检测"
+    ),
+) -> None:
+    """卸载主题：恢复备份或移除主题相关配置。"""
+    code = uninstall_theme(theme_name, rime_dir=rime_dir)
     if code != 0:
         raise typer.Exit(code=code)
 

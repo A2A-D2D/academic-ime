@@ -63,6 +63,19 @@ def term_to_pinyin(term: str) -> str:
     return " ".join(part for part in parts if part)
 
 
+def english_prefix_codes(word: str, min_len: int = 3) -> list[str]:
+    """Generate prefix codes for English word auto-completion.
+
+    Example: 'history' → ['his', 'hist', 'histo', 'histor', 'history']
+    Prefixes shorter than min_len are skipped to avoid noise (too many
+    candidates from very short prefixes like 'h', 'hi').
+    """
+    word_lower = word.lower()
+    if len(word_lower) <= min_len:
+        return [word_lower]
+    return [word_lower[:i] for i in range(min_len, len(word_lower) + 1)]
+
+
 def chunk_to_pinyin(chunks: list[str]) -> str:
     """Convert a list of chunks (from jieba) into a combined pinyin string."""
     result_parts: list[str] = []

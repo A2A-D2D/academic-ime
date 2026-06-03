@@ -62,12 +62,14 @@ sort: by_weight
 use_preset_vocabulary: true
 import_tables:
   - luna_pinyin
+  - academic_ime
 ...
 
 """
 
 LUNA_SIMP_PATCH = """patch:
   translator/dictionary: luna_pinyin_plus
+  translator/enable_completion: true
 """
 
 DEFAULT_CUSTOM = """patch:

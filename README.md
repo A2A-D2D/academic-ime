@@ -76,16 +76,19 @@ ffSampling之间    ffsampling zhi jian          38000
 | `academic-ime stats <csv>` | 显示词库统计和 Top 20 |
 | `academic-ime setup-rime <dict>` | **一键部署到 Rime**（复制+配置+皮肤+部署） |
 | `academic-ime theme list` | 列出内置主题 |
-| `academic-ime theme install <name>` | 安装皮肤（自动备份原配置） |
+| `academic-ime theme show <name>` | 展示主题详情（含颜色预览色块） |
 | `academic-ime theme preview <name>` | 预览皮肤 YAML 内容 |
+| `academic-ime theme install <name>` | 安装皮肤（自动备份原配置） |
+| `academic-ime theme uninstall <name>` | 卸载皮肤（恢复备份或移除配置） |
 
 ### 主题 / 皮肤
 
-内置 3 款小狼毫皮肤：
+内置 4 款小狼毫皮肤：
 
 | 主题 | 命令 | 说明 |
 |------|------|------|
 | 线条小狗 | `cute-dog` | 奶油白背景、浅棕边框、粉色高亮、🐾 标签、🐶 选中标记、圆角阴影 |
+| 线条小狗 | `line-puppy` | 浅米白背景、浅奶黄高亮、棕色文字、细圆角手账风，纯配色实现 |
 | 学术蓝 | `academic-blue` | 浅蓝灰背景、蓝色高亮，清爽专业 |
 | 极简暗色 | `minimal-dark` | 深色背景、低对比度，适合夜间 |
 
@@ -93,14 +96,22 @@ ffSampling之间    ffsampling zhi jian          38000
 # 列出所有主题
 academic-ime theme list
 
-# 预览
-academic-ime theme preview cute-dog
+# 查看主题详情（含颜色色块预览）
+academic-ime theme show line-puppy
 
-# 安装（自动备份原有 weasel.custom.yaml）
-academic-ime theme install cute-dog
+# 预览 YAML 配置
+academic-ime theme preview line-puppy
+
+# 安装主题（自动备份原有 weasel.custom.yaml → .bak.academic-ime）
+academic-ime theme install line-puppy
+
+# 卸载主题（自动恢复备份或移除相关配置）
+academic-ime theme uninstall line-puppy
 ```
 
-> 小狼毫原生皮肤主要支持颜色、字体、布局、圆角等，不支持直接在候选框插入 PNG/SVG 图片。cute-dog 使用 emoji 和配色模拟线条小狗风格。
+安装后需要：右键小狼毫托盘图标 → 重新部署
+
+> 小狼毫原生皮肤主要支持颜色、字体、布局、圆角等，不支持直接在候选框插入 PNG/SVG 图片。所有主题均使用纯配色 + 布局实现，不依赖任何外部素材。
 
 ### CSV 字段
 

@@ -18,7 +18,7 @@ from academic_ime.config import (
     MIN_WEIGHT,
     MAX_WEIGHT,
 )
-from academic_ime.pinyin_utils import term_to_pinyin
+from academic_ime.pinyin_utils import term_to_pinyin, english_prefix_codes
 from academic_ime.term_extractor import classify_term
 
 
@@ -77,6 +77,7 @@ def build_lexicon(
     """
     entries: list[dict[str, str | int]] = []
     seen: set[str] = set()
+    seen_prefix: set[tuple[str, str]] = set()  # (term_lower, prefix_code) dedup
 
     for term, freq in term_freq.items():
         source_count = term_sources.get(term, 1)
@@ -93,6 +94,24 @@ def build_lexicon(
             "enabled": 1,
         })
         seen.add(term.lower())
+
+        # Generate prefix entries for English terms (auto-completion)
+        if term_type == "en" and len(term) >= 4:
+            for prefix_code in english_prefix_codes(term):
+                if prefix_code == pinyin:
+                    continue  # Skip the full-length code (already the main entry)
+                key = (term.lower(), prefix_code)
+                if key in seen_prefix:
+                    continue
+                seen_prefix.add(key)
+                entries.append({
+                    "term": term,
+                    "pinyin": prefix_code,
+                    "weight": weight - 1000,  # Slightly lower than exact match
+                    "source_count": source_count,
+                    "term_type": term_type,
+                    "enabled": 1,
+                })
 
     # Merge common English words (lower weight, as baseline vocabulary)
     if include_common_en:
@@ -111,6 +130,24 @@ def build_lexicon(
                 "enabled": 1,
             })
             seen.add(word.lower())
+
+            # Generate prefix entries for auto-completion
+            if len(word) >= 4:
+                for prefix_code in english_prefix_codes(word):
+                    if prefix_code == word.lower():
+                        continue
+                    key = (word.lower(), prefix_code)
+                    if key in seen_prefix:
+                        continue
+                    seen_prefix.add(key)
+                    entries.append({
+                        "term": word,
+                        "pinyin": prefix_code,
+                        "weight": weight - 500,
+                        "source_count": 0,
+                        "term_type": "en",
+                        "enabled": 1,
+                    })
 
     entries.sort(key=lambda e: e["weight"], reverse=True)
     return entries

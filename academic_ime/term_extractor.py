@@ -158,6 +158,56 @@ def extract_ngram_phrases(words: list[str]) -> list[str]:
     return results
 
 
+def extract_english_anchored_phrases(
+    text: str,
+    english_terms: list[str],
+    max_following: int = 6,
+    min_zh: int = 2,
+    max_zh: int = 5,
+) -> list[str]:
+    """Generate联想词 phrases anchored on English terms.
+
+    For each English term, finds the following Chinese words in the text
+    and creates combined phrases like 'Falcon签名', 'FPU/FFT精度'.
+    This enables English-to-Chinese联想 when typing English terms.
+    """
+    if not english_terms:
+        return []
+
+    results: list[str] = []
+    seen: set[str] = set()
+
+    for term in english_terms:
+        for m in re.finditer(re.escape(term), text):
+            end = m.end()
+            # Collect Chinese chars from following text
+            zh_chars = ""
+            j = end
+            while j < len(text) and len(zh_chars) < max_following:
+                ch = text[j]
+                if "一" <= ch <= "鿿":
+                    zh_chars += ch
+                elif ch.isspace() or (ch.isascii() and not ch.isalnum()):
+                    pass  # Skip whitespace/punctuation
+                else:
+                    break
+                j += 1
+
+            if len(zh_chars) < min_zh:
+                continue
+
+            # Generate phrases: term + N zh chars (2-5 chars works best)
+            for n in range(min_zh, min(len(zh_chars) + 1, max_zh + 1)):
+                zh_part = zh_chars[:n]
+                phrase = f"{term}{zh_part}".strip()
+                if MIN_PHRASE_LEN <= len(phrase) <= MAX_PHRASE_LEN:
+                    if phrase not in seen:
+                        seen.add(phrase)
+                        results.append(phrase)
+
+    return results
+
+
 def classify_term(term: str) -> str:
     """Classify a term as 'zh', 'en', 'mixed', or 'phrase'.
 
@@ -199,6 +249,10 @@ def extract_terms(text: str, filename: str = "") -> Counter:
     # 4. N-gram phrases from segmented words
     phrases = extract_ngram_phrases(zh_words)
     results.update(phrases)
+
+    # 5. English-anchored phrases (联想词 for English terms)
+    eng_anchored = extract_english_anchored_phrases(text, eng_terms)
+    results.update(eng_anchored)
 
     return results
 
